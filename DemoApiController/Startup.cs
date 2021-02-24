@@ -29,6 +29,8 @@ namespace DemoApiController
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
+
             services.AddMvc(options =>
             {
                 options.OutputFormatters.Insert(0, new XmlSerializerOutputFormatter());
@@ -38,12 +40,14 @@ namespace DemoApiController
             services.AddDbContext<PorositeContext>(Options => Options.UseSqlServer(Configuration["DbConnection"]));
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider provider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            var context = provider.GetRequiredService<PorositeContext>();
+            context.Database.EnsureCreated();
 
             app.UseHttpsRedirection();
 

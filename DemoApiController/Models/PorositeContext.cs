@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using DemoApiController.Models;
-
+using DemoApiController.DbTable;
 
 namespace DemoApiController.Models
 {
@@ -10,11 +10,13 @@ namespace DemoApiController.Models
     {
 
 
-        public virtual DbSet<Porosi> Porosi { get; set; }
+        public DbSet<Porosi> Porosi { get; set; }
+        //public DbSet<Porosite> Developer { get; set; }
 
         public PorositeContext(DbContextOptions<PorositeContext> options)
        : base(options)
-        {
+        {      
+    
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
